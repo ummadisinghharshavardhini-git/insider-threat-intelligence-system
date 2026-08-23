@@ -10,3 +10,18 @@ The system consists of four main layers:
 2. API Gateway
 3. Microservices Layer
 4. Data Layer
+
+## Architecture Layers
+
+### 1. Client/User Layer
+Users such as Security Analysts, SOC Engineers, Security Managers, and Admins access the system through the frontend.
+
+### 2. API Gateway
+The API Gateway is built using FastAPI. It handles authentication, routing, and rate limiting.
+
+### 3. Microservices Layer
+This layer contains modules for identity management, activity collection, behavioral profiling, anomaly detection, risk scoring, investigation, and alerting.
+
+### 4. Data Layer
+PostgreSQL is used for structured data such as users, employees, incidents, and alerts. MongoDB is used for flexible data such as raw activity logs and behavioral analytics.
+
