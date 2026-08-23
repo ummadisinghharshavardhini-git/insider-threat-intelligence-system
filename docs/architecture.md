@@ -25,3 +25,4 @@ This layer contains modules for identity management, activity collection, behavi
 ### 4. Data Layer
 PostgreSQL is used for structured data such as users, employees, incidents, and alerts. MongoDB is used for flexible data such as raw activity logs and behavioral analytics.
 
+<img width="205" height="536" alt="architecture-diagram" src="https://github.com/user-attachments/assets/97a9e747-d0ab-4ae4-9f40-2782c8495bdd" />
