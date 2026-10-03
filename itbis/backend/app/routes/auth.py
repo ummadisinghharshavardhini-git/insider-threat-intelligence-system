@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from .database import get_db
-from .models import User
-from .schemas import UserCreate, UserLogin
+from ..database import get_db
+from ..models import User
+from ..schemas import UserCreate, UserLogin
+
 
 router = APIRouter(
     prefix="/auth",
@@ -42,7 +43,9 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
 
-    existing_user = db.query(User).filter(User.email == user.email).first()
+    existing_user = db.query(User).filter(
+        User.email == user.email
+    ).first()
 
     if not existing_user:
         raise HTTPException(

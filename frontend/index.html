@@ -2,43 +2,517 @@
 <html lang="en">
 
 <head>
-    <meta ch<arset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insider Threat Behavioral Intelligence System</title>
+
+    <title>ITBIS Security Dashboard</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- ================= SIDEBAR ================= -->
 
-        <h1>Insider Threat Behavioral Intelligence System</h1>
+    <aside class="sidebar">
 
-        <p class="subtitle">Behavioral Monitoring Dashboard</p>
+        <div class="brand">
+            <div class="brand-logo">IT</div>
 
-        <div class="dashboard">
-
-            <div class="card">
-                <h2>System Status</h2>
-                <p>Healthy</p>
+            <div>
+                <h2>ITBIS</h2>
+                <span>Security System</span>
             </div>
+        </div>
 
-            <div class="card">
-                <h2>Total Users</h2>
-                <p>0</p>
-            </div>
+        <nav class="sidebar-nav">
 
-            <div class="card">
-                <h2>Threat Alerts</h2>
-                <p>0</p>
-            </div>
+            <a href="#" class="nav-item active">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="#employeesSection" class="nav-item">
+                <span>👥</span>Employees
+            </a>
+
+            <a href="#activitySection" class="nav-item">
+                <span>◷</span>
+                Activity Logs
+            </a>
+
+            <a href="#anomalySection" class="nav-item">
+                <span>⚠</span>
+                Anomalies
+            </a>
+
+            <a href="#riskSection" class="nav-item">
+                <span>▥</span>
+                Risk Analysis
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>◈</span>
+                Behavioral Baseline
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button class="logout-btn" onclick="logout()">
+                <span>↪</span>
+                Logout
+            </button>
 
         </div>
 
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <div class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <h1>Security Dashboard</h1>
+                <p>Insider Threat Behavioral Intelligence System</p>
+            </div>
+
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <span>Security Admin</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= DASHBOARD CONTENT ================= -->
+
+        <main class="dashboard-container">
+
+
+            <!-- WELCOME BANNER -->
+
+            <section class="welcome-banner">
+
+                <div>
+                    <h2>Welcome back 👋</h2>
+
+                    <p>
+                        Monitor employee behavior, detect anomalies,
+                        and analyze security risks.
+                    </p>
+                </div>
+
+                <div class="system-online">
+                    <span class="online-dot"></span>
+                    System Online
+                </div>
+
+            </section>
+
+
+            <!-- ================= STAT CARDS ================= -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👥
+                    </div>
+
+                    <div>
+                        <span>Total Employees</span>
+                        <h2 id="employeeCount">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ◷
+                    </div>
+
+                    <div>
+                        <span>Total Activities</span>
+                        <h2 id="activityCount">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ⚠
+                    </div>
+
+                    <div>
+                        <span>Anomalies Detected</span>
+                        <h2 id="anomalyCount">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        !
+                    </div>
+
+                    <div>
+                        <span>High Risk</span>
+                        <h2 id="highRiskCount">0</h2>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RISK + SYSTEM STATUS ================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- RISK OVERVIEW -->
+
+                <div class="dashboard-card" id="riskSection">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h2>Risk Overview</h2>
+                            <p>Current employee risk distribution</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+                            <span>High Risk</span>
+                            <strong id="highRisk">0</strong>
+                        </div>
+
+                        <div class="progress-background">
+                            <div id="highProgress" class="progress-bar high">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+                            <span>Medium Risk</span>
+                            <strong id="mediumRisk">0</strong>
+                        </div>
+
+                        <div class="progress-background">
+                            <div id="mediumProgress" class="progress-bar medium">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+                            <span>Low Risk</span>
+                            <strong id="lowRisk">0</strong>
+                        </div>
+
+                        <div class="progress-background">
+                            <div id="lowProgress" class="progress-bar low">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SYSTEM STATUS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h2>System Status</h2>
+                            <p>ITBIS infrastructure health</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-list">
+
+                        <div class="status-row">
+
+                            <div>
+                                <strong>FastAPI Backend</strong>
+                                <span>API Service</span>
+                            </div>
+
+                            <div class="status-ok">
+                                ● Online
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <div>
+                                <strong>MongoDB</strong>
+                                <span>Behavior Database</span>
+                            </div>
+
+                            <div class="status-ok">
+                                ● Connected
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <div>
+                                <strong>PostgreSQL</strong>
+                                <span>Employee Database</span>
+                            </div>
+
+                            <div class="status-ok">
+                                ● Connected
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECENT ACTIVITY ================= -->
+
+            <section class="dashboard-card full-width" id="activitySection">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Recent Activity</h2>
+                        <p>Latest employee activities</p>
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Employee ID</th>
+                                <th>Activity</th>
+                                <th>Device</th>
+                                <th>Application</th>
+                                <th>Data Volume</th>
+                                <th>Risk</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="activityTable">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Loading activities...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= ANOMALY DETECTION ================= -->
+
+            <section class="dashboard-card full-width" id="anomalySection">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Anomaly Detection</h2>
+
+                        <p>
+                            Recent security anomalies detected
+                            from employee behavioral patterns
+                        </p>
+                    </div>
+
+                    <div class="section-badge">
+                        Behavioral Analysis
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Employee ID</th>
+                                <th>Activity</th>
+                                <th>Login Time</th>
+                                <th>Baseline Avg</th>
+                                <th>Threshold</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="anomalyTable">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Loading anomalies...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- Employees Section -->
+            <section class="dashboard-card full-width" id="employeesSection">
+                <div class="card-header">
+                    <div>
+                        <h2>Employees</h2>
+                        <p>Registered employees in the ITBIS system</p>
+                    </div>
+                    <div class="section-badge">Employee Management</div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Designation</th>
+                                <th>Manager ID</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="employeesTable">
+                            <tr>
+                                <td colspan="5">Loading employees...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- ================= EMPLOYEE RISK MONITORING ================= -->
+
+            <section class="dashboard-card full-width">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Employee Risk Monitoring</h2>
+                        <p>Individual employee security risk</p>
+                    </div>
+
+                </div>
+
+
+                <div class="employee-list">
+
+                    <div class="loading-message">
+                        Loading employee risk data...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="footer">
+
+            <p>
+                ITBIS — Insider Threat Behavioral Intelligence System
+            </p>
+
+            <span>
+                Security Monitoring Dashboard
+            </span>
+
+        </footer>
+
+
     </div>
 
-    ;
-    </script>
+
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="script.js"></script>
 

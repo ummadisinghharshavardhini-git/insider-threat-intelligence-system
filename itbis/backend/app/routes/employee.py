@@ -11,6 +11,8 @@ router = APIRouter(
 )
 
 
+# ================= CREATE EMPLOYEE =================
+
 @router.post("/")
 def create_employee(
     employee: EmployeeCreate,
@@ -43,6 +45,28 @@ def create_employee(
         "employee_id": new_employee.employee_id
     }
 
+
+# ================= GET ALL EMPLOYEES =================
+
+@router.get("/")
+def get_all_employees(
+    db: Session = Depends(get_db)
+):
+    employees = db.query(Employee).all()
+
+    return [
+        {
+            "employee_id": employee.employee_id,
+            "name": employee.name,
+            "department": employee.department,
+            "designation": employee.designation,
+            "manager_id": employee.manager_id
+        }
+        for employee in employees
+    ]
+
+
+# ================= GET SINGLE EMPLOYEE =================
 
 @router.get("/{employee_id}")
 def get_employee(
