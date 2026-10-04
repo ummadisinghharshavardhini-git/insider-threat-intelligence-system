@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import employee, health, auth, risk, activity, anomaly, anomaly_routes
+from app.routes import employee, health, auth, risk, activity, anomaly, anomaly_routes, incident, evidence, alert, analytics, dashboard
 
 
 app = FastAPI(
@@ -33,6 +33,11 @@ app.include_router(risk.router)
 app.include_router(activity.router)
 app.include_router(anomaly.router)
 app.include_router(anomaly_routes.router)
+app.include_router(incident.router)
+app.include_router(evidence.router)
+app.include_router(alert.router)
+app.include_router(analytics.router)
+app.include_router(dashboard.router)
 
 
 @app.get("/")

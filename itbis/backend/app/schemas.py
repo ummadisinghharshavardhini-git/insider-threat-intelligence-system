@@ -17,3 +17,14 @@ class EmployeeCreate(BaseModel):
     department: str
     designation: str
     manager_id: str | None = None
+
+
+class EvidenceCreate(BaseModel):
+    note: str
+    added_by: str
+
+
+class AlertCreate(BaseModel):
+    employee_id: str
+    severity: str
+    message: str
