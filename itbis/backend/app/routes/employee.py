@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..models import Employee
 from ..schemas import EmployeeCreate
+from app.audit import log_action
 
 router = APIRouter(
     prefix="/employees",
@@ -39,6 +40,16 @@ def create_employee(
     db.add(new_employee)
     db.commit()
     db.refresh(new_employee)
+
+    log_action(
+        db=db,
+        action="employee_onboarded",
+        details=(
+            f"Employee {new_employee.employee_id} onboarded; "
+            f"department={new_employee.department}; "
+            f"designation={new_employee.designation}"
+        )
+    )
 
     return {
         "message": "Employee onboarded successfully",

@@ -2,6 +2,7 @@
 // ITBIS SECURITY DASHBOARD
 // ============================================
 
+
 // ============================================
 // LOGIN PROTECTION
 // ============================================
@@ -25,17 +26,26 @@ const API_URL = "http://127.0.0.1:8000";
 // ============================================
 
 async function checkBackend() {
+
     try {
-        const response = await fetch(API_URL + "/health");
+
+        const response =
+            await fetch(API_URL + "/health");
 
         if (!response.ok) {
             throw new Error("Backend unavailable");
         }
 
-        console.log("ITBIS Backend Connected");
+        console.log(
+            "Backend connected successfully"
+        );
 
     } catch (error) {
-        console.error("Backend connection error:", error);
+
+        console.error(
+            "Backend connection error:",
+            error
+        );
     }
 }
 
@@ -45,6 +55,7 @@ async function checkBackend() {
 // ============================================
 
 function getRiskLevel(score) {
+
     score = Number(score || 0);
 
     if (score >= 75) {
@@ -64,29 +75,62 @@ function getRiskLevel(score) {
 // ============================================
 
 async function loadEmployees() {
+
     try {
-        const response = await fetch(API_URL + "/employees/");
+
+        const response =
+            await fetch(
+                API_URL + "/employees/"
+            );
 
         if (!response.ok) {
-            throw new Error("Failed to load employees");
+            throw new Error(
+                "Failed to load employees"
+            );
         }
 
-        const employees = await response.json();
+        const employees =
+            await response.json();
 
-        console.log("Employees:", employees);
+        console.log(
+            "Employees:",
+            employees
+        );
+
+
+        // Employee count
 
         const employeeCount =
-            document.getElementById("employeeCount");
+            document.getElementById(
+                "employeeCount"
+            );
 
         if (employeeCount) {
-            employeeCount.textContent = employees.length;
+
+            employeeCount.textContent =
+                employees.length;
         }
 
-        await loadAllEmployeeRisk(employees);
-        await loadEmployeesTable(employees);
+
+        // Load risk
+
+        await loadAllEmployeeRisk(
+            employees
+        );
+
+
+        // Load employee table
+
+        await loadEmployeesTable(
+            employees
+        );
 
     } catch (error) {
-        console.error("Employee loading error:", error);
+
+        console.error(
+            "Employee loading error:",
+            error
+        );
     }
 }
 
@@ -95,10 +139,14 @@ async function loadEmployees() {
 // EMPLOYEES TABLE
 // ============================================
 
-async function loadEmployeesTable(employees) {
+async function loadEmployeesTable(
+    employees
+) {
 
     const table =
-        document.getElementById("employeesTable");
+        document.getElementById(
+            "employeesTable"
+        );
 
     if (!table) {
         return;
@@ -106,46 +154,67 @@ async function loadEmployeesTable(employees) {
 
     table.innerHTML = "";
 
-    if (!employees || employees.length === 0) {
+
+    if (
+        !employees ||
+        employees.length === 0
+    ) {
 
         table.innerHTML =
             "<tr>" +
-            "<td colspan='5'>No employees found</td>" +
+            "<td colspan='6'>" +
+            "No employees found" +
+            "</td>" +
             "</tr>";
 
         return;
     }
 
-    employees.forEach(function (employee) {
 
-        const row =
-            document.createElement("tr");
+    employees.forEach(
+        function (employee) {
 
-        row.innerHTML =
-            "<td>" +
-            (employee.employee_id || "-") +
-            "</td>" +
+            const row =
+                document.createElement("tr");
 
-            "<td>" +
-            (employee.name || "-") +
-            "</td>" +
 
-            "<td>" +
-            (employee.department || "-") +
-            "</td>" +
+            row.innerHTML =
 
-            "<td>" +
-            (employee.designation || "-") +
-            "</td>" +
+                "<td>" +
+                (employee.employee_id || "-") +
+                "</td>" +
 
-            "<td>" +
-            (employee.manager_id || "-") +
-            "</td>";
+                "<td>" +
+                (employee.name || "-") +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                (employee.department || "-") +
+                "</td>" +
 
-    console.log("Employee table loaded");
+                "<td>" +
+                (employee.designation || "-") +
+                "</td>" +
+
+                "<td>" +
+                (employee.manager_id || "-") +
+                "</td>" +
+
+                "<td>" +
+                "<span class='badge low'>" +
+                "ACTIVE" +
+                "</span>" +
+                "</td>";
+
+
+            table.appendChild(row);
+        }
+    );
+
+
+    console.log(
+        "Employee table loaded"
+    );
 }
 
 
@@ -153,26 +222,37 @@ async function loadEmployeesTable(employees) {
 // LOAD EMPLOYEE RISK
 // ============================================
 
-async function loadEmployeeRisk(employeeId) {
+async function loadEmployeeRisk(
+    employeeId
+) {
 
     try {
 
         const response =
             await fetch(
-                API_URL + "/risk/" + employeeId
+                API_URL +
+                "/risk/" +
+                employeeId
             );
 
         if (!response.ok) {
-            throw new Error("Failed to load risk");
+
+            throw new Error(
+                "Failed to load risk"
+            );
         }
 
         const data =
             await response.json();
 
+
         console.log(
-            "Risk data for " + employeeId + ":",
+            "Risk data for " +
+            employeeId +
+            ":",
             data
         );
+
 
         return data;
 
@@ -185,10 +265,17 @@ async function loadEmployeeRisk(employeeId) {
             error
         );
 
+
         return {
-            employee_id: employeeId,
+
+            employee_id:
+                employeeId,
+
             risk_score: 0,
-            risk_level: "low",
+
+            risk_level:
+                "low",
+
             anomaly_count: 0
         };
     }
@@ -199,131 +286,196 @@ async function loadEmployeeRisk(employeeId) {
 // LOAD ALL EMPLOYEE RISK
 // ============================================
 
-async function loadAllEmployeeRisk(employees) {
+async function loadAllEmployeeRisk(
+    employees
+) {
 
     let highRisk = 0;
+
     let mediumRisk = 0;
+
     let lowRisk = 0;
 
-    for (const employee of employees) {
+
+    for (
+        const employee of employees
+    ) {
 
         const risk =
             await loadEmployeeRisk(
                 employee.employee_id
             );
 
+
         const score =
-            Number(risk.risk_score || 0);
+            Number(
+                risk.risk_score || 0
+            );
+
 
         const level =
             getRiskLevel(score);
 
+
         if (level === "high") {
+
             highRisk++;
-        }
-        else if (level === "medium") {
+
+        } else if (
+            level === "medium"
+        ) {
+
             mediumRisk++;
-        }
-        else {
+
+        } else {
+
             lowRisk++;
         }
     }
 
 
-    // High Risk Count
+    // ========================================
+    // HIGH RISK COUNT
+    // ========================================
 
     const highRiskCount =
         document.getElementById(
             "highRiskCount"
         );
 
+
     if (highRiskCount) {
+
         highRiskCount.textContent =
             highRisk;
     }
 
 
-    // Risk Overview
+    // ========================================
+    // RISK OVERVIEW
+    // ========================================
 
     const highRiskElement =
-        document.getElementById("highRisk");
+        document.getElementById(
+            "highRisk"
+        );
+
 
     const mediumRiskElement =
-        document.getElementById("mediumRisk");
+        document.getElementById(
+            "mediumRisk"
+        );
+
 
     const lowRiskElement =
-        document.getElementById("lowRisk");
+        document.getElementById(
+            "lowRisk"
+        );
+
 
     if (highRiskElement) {
+
         highRiskElement.textContent =
             highRisk;
     }
 
+
     if (mediumRiskElement) {
+
         mediumRiskElement.textContent =
             mediumRisk;
     }
 
+
     if (lowRiskElement) {
+
         lowRiskElement.textContent =
             lowRisk;
     }
 
 
-    // Progress Bars
+    // ========================================
+    // PROGRESS BARS
+    // ========================================
 
     const total =
         highRisk +
         mediumRisk +
         lowRisk;
 
+
     const highProgress =
         document.getElementById(
             "highProgress"
         );
+
 
     const mediumProgress =
         document.getElementById(
             "mediumProgress"
         );
 
+
     const lowProgress =
         document.getElementById(
             "lowProgress"
         );
 
+
     if (total > 0) {
 
         if (highProgress) {
+
             highProgress.style.width =
-                (highRisk / total * 100) + "%";
+                (
+                    highRisk /
+                    total *
+                    100
+                ) + "%";
         }
+
 
         if (mediumProgress) {
+
             mediumProgress.style.width =
-                (mediumRisk / total * 100) + "%";
+                (
+                    mediumRisk /
+                    total *
+                    100
+                ) + "%";
         }
 
+
         if (lowProgress) {
+
             lowProgress.style.width =
-                (lowRisk / total * 100) + "%";
+                (
+                    lowRisk /
+                    total *
+                    100
+                ) + "%";
         }
 
     } else {
 
         if (highProgress) {
-            highProgress.style.width = "0%";
+            highProgress.style.width =
+                "0%";
         }
 
         if (mediumProgress) {
-            mediumProgress.style.width = "0%";
+            mediumProgress.style.width =
+                "0%";
         }
 
         if (lowProgress) {
-            lowProgress.style.width = "0%";
+            lowProgress.style.width =
+                "0%";
         }
     }
 
+
+    // Employee risk monitoring
 
     await loadEmployeeRiskMonitoring(
         employees
@@ -340,54 +492,80 @@ async function loadEmployeeRiskMonitoring(
 ) {
 
     const container =
-        document.querySelector(
-            ".employee-list"
+        document.getElementById(
+            "employeeRiskMonitoring"
         );
+
 
     if (!container) {
         return;
     }
 
+
     container.innerHTML = "";
 
-    for (const employee of employees) {
+
+    for (
+        const employee of employees
+    ) {
 
         const risk =
             await loadEmployeeRisk(
                 employee.employee_id
             );
 
+
         const score =
-            Number(risk.risk_score || 0);
+            Number(
+                risk.risk_score || 0
+            );
+
 
         const level =
             getRiskLevel(score);
 
+
         const row =
             document.createElement("div");
 
-        row.className = "employee-row";
 
+        row.className =
+            "employee-row";
+
+
+        // ====================================
+        // INITIALS
+        // ====================================
 
         let initials = "EM";
+
 
         if (employee.name) {
 
             const parts =
                 employee.name.split(" ");
 
+
             initials =
                 parts
-                    .map(function (part) {
-                        return part.charAt(0);
-                    })
+                    .map(
+                        function (part) {
+
+                            return part.charAt(0);
+                        }
+                    )
                     .join("")
                     .substring(0, 2)
                     .toUpperCase();
         }
 
 
+        // ====================================
+        // ROW
+        // ====================================
+
         row.innerHTML =
+
             "<div class='employee-info'>" +
 
             "<div class='employee-avatar'>" +
@@ -395,16 +573,25 @@ async function loadEmployeeRiskMonitoring(
             "</div>" +
 
             "<div>" +
+
             "<strong>" +
-            (employee.name || "Unknown Employee") +
+            (
+                employee.name ||
+                "Unknown Employee"
+            ) +
             "</strong>" +
 
             "<small>" +
-            employee.employee_id +
+            (
+                employee.employee_id ||
+                "-"
+            ) +
             "</small>" +
+
             "</div>" +
 
             "</div>" +
+
 
             "<div class='risk-score'>" +
 
@@ -412,9 +599,12 @@ async function loadEmployeeRiskMonitoring(
             score +
             "</strong>" +
 
-            "<span>Risk Score</span>" +
+            "<span>" +
+            "Risk Score" +
+            "</span>" +
 
             "</div>" +
+
 
             "<div class='employee-risk-badge'>" +
 
@@ -427,6 +617,7 @@ async function loadEmployeeRiskMonitoring(
             "</span>" +
 
             "</div>";
+
 
         container.appendChild(row);
     }
@@ -444,21 +635,27 @@ async function loadActivities() {
             "activityTable"
         );
 
+
     try {
 
         const response =
             await fetch(
-                API_URL + "/activity/"
+                API_URL +
+                "/activity/"
             );
 
+
         if (!response.ok) {
+
             throw new Error(
                 "Failed to load activities"
             );
         }
 
+
         const activities =
             await response.json();
+
 
         console.log(
             "Activities:",
@@ -466,14 +663,18 @@ async function loadActivities() {
         );
 
 
-        // Activity Count
+        // ====================================
+        // ACTIVITY COUNT
+        // ====================================
 
         const activityCount =
             document.getElementById(
                 "activityCount"
             );
 
+
         if (activityCount) {
+
             activityCount.textContent =
                 activities.length;
         }
@@ -483,10 +684,13 @@ async function loadActivities() {
             return;
         }
 
+
         table.innerHTML = "";
 
 
-        if (activities.length === 0) {
+        if (
+            activities.length === 0
+        ) {
 
             table.innerHTML =
                 "<tr>" +
@@ -499,40 +703,62 @@ async function loadActivities() {
         }
 
 
+        // ====================================
+        // ACTIVITY ROWS
+        // ====================================
+
         activities.forEach(
             function (activity) {
 
                 const row =
                     document.createElement("tr");
 
+
                 const score =
                     Number(
                         activity.risk_score || 0
                     );
 
+
                 const level =
                     getRiskLevel(score);
+
 
                 row.innerHTML =
 
                     "<td>" +
-                    (activity.employee_id || "-") +
+                    (
+                        activity.employee_id ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    (activity.activity || "-") +
+                    (
+                        activity.activity ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    (activity.device || "-") +
+                    (
+                        activity.device ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    (activity.application || "-") +
+                    (
+                        activity.application ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    (activity.data_volume ?? 0) +
+                    (
+                        activity.data_volume ??
+                        0
+                    ) +
                     "</td>" +
 
                     "<td>" +
@@ -547,9 +773,11 @@ async function loadActivities() {
 
                     "</td>";
 
+
                 table.appendChild(row);
             }
         );
+
 
     } catch (error) {
 
@@ -557,6 +785,7 @@ async function loadActivities() {
             "Activity loading error:",
             error
         );
+
 
         if (table) {
 
@@ -582,55 +811,73 @@ async function loadAnomalies() {
             "anomalyTable"
         );
 
+
     if (!table) {
         return;
     }
+
 
     try {
 
         const response =
             await fetch(
-                API_URL + "/anomalies/"
+                API_URL +
+                "/anomalies/"
             );
 
+
         if (!response.ok) {
+
             throw new Error(
                 "Failed to load anomalies"
             );
         }
 
+
         const anomalies =
             await response.json();
+
 
         console.log(
             "Anomalies:",
             anomalies
         );
 
+
         table.innerHTML = "";
 
 
-        // Count only TRUE anomalies
+        // ====================================
+        // REAL ANOMALIES
+        // ====================================
 
         const realAnomalies =
             anomalies.filter(
                 function (anomaly) {
-                    return anomaly.anomaly === true;
+
+                    return (
+                        anomaly.anomaly === true
+                    );
                 }
             );
+
 
         const anomalyCount =
             document.getElementById(
                 "anomalyCount"
             );
 
+
         if (anomalyCount) {
+
             anomalyCount.textContent =
                 realAnomalies.length;
         }
 
 
-        if (anomalies.length === 0) {
+        if (
+            anomalies.length === 0
+        ) {
 
             table.innerHTML =
                 "<tr>" +
@@ -643,19 +890,26 @@ async function loadAnomalies() {
         }
 
 
+        // ====================================
+        // ANOMALY ROWS
+        // ====================================
+
         anomalies.forEach(
             function (anomaly) {
 
                 const row =
                     document.createElement("tr");
 
+
                 const isAnomaly =
                     anomaly.anomaly === true;
+
 
                 const status =
                     isAnomaly
                         ? "ANOMALY"
                         : "NORMAL";
+
 
                 const statusClass =
                     isAnomaly
@@ -665,10 +919,12 @@ async function loadAnomalies() {
 
                 let baseline = "-";
 
+
                 if (
                     anomaly.baseline_average !== null &&
                     anomaly.baseline_average !== undefined
                 ) {
+
                     baseline =
                         Number(
                             anomaly.baseline_average
@@ -678,10 +934,12 @@ async function loadAnomalies() {
 
                 let threshold = "-";
 
+
                 if (
                     anomaly.threshold !== null &&
                     anomaly.threshold !== undefined
                 ) {
+
                     threshold =
                         Number(
                             anomaly.threshold
@@ -692,11 +950,17 @@ async function loadAnomalies() {
                 row.innerHTML =
 
                     "<td>" +
-                    (anomaly.employee_id || "-") +
+                    (
+                        anomaly.employee_id ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    (anomaly.activity || "-") +
+                    (
+                        anomaly.activity ||
+                        "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
@@ -726,9 +990,11 @@ async function loadAnomalies() {
 
                     "</td>";
 
+
                 table.appendChild(row);
             }
         );
+
 
     } catch (error) {
 
@@ -736,6 +1002,7 @@ async function loadAnomalies() {
             "Anomaly loading error:",
             error
         );
+
 
         table.innerHTML =
             "<tr>" +
@@ -747,9 +1014,473 @@ async function loadAnomalies() {
 }
 
 
-// ============================================
+// ============================================================
+// MILESTONE 4 - ADMIN DASHBOARD
+// ============================================================
+
+async function loadAdminDashboard() {
+
+    try {
+
+        // Get current role
+
+        const role =
+            localStorage.getItem(
+                "itbisRole"
+            ) || "admin";
+
+
+        console.log(
+            "Admin Dashboard Role:",
+            role
+        );
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/dashboard/admin?role=" +
+                encodeURIComponent(role)
+            );
+
+
+        if (!response.ok) {
+
+            if (response.status === 403) {
+
+                throw new Error(
+                    "Admin access required"
+                );
+            }
+
+
+            throw new Error(
+                "Failed to load admin dashboard"
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Admin Dashboard:",
+            data
+        );
+
+
+        // ====================================
+        // TOTAL USERS
+        // ====================================
+
+        const userCount =
+            document.getElementById(
+                "adminUserCount"
+            );
+
+
+        if (userCount) {
+
+            userCount.textContent =
+                data.user_count ?? 0;
+        }
+
+
+        // ====================================
+        // TOTAL EMPLOYEES
+        // ====================================
+
+        const adminEmployeeCount =
+            document.getElementById(
+                "adminEmployeeCount"
+            );
+
+
+        if (adminEmployeeCount) {
+
+            adminEmployeeCount.textContent =
+                data.employee_count ?? 0;
+        }
+
+
+        // ====================================
+        // TOTAL INCIDENTS
+        // ====================================
+
+        const incidentCount =
+            document.getElementById(
+                "incidentCount"
+            );
+
+
+        if (incidentCount) {
+
+            incidentCount.textContent =
+                data.total_incidents ?? 0;
+        }
+
+
+        // ====================================
+        // OPEN INCIDENTS
+        // ====================================
+
+        const openIncidentCount =
+            document.getElementById(
+                "openIncidentCount"
+            );
+
+
+        if (openIncidentCount) {
+
+            openIncidentCount.textContent =
+                data.open_incidents ?? 0;
+        }
+
+
+        // ====================================
+        // USERS BY ROLE
+        // ====================================
+
+        const roleContainer =
+            document.getElementById(
+                "usersByRole"
+            );
+
+
+        if (roleContainer) {
+
+            roleContainer.innerHTML = "";
+
+
+            const roles =
+                data.users_by_role || {};
+
+
+            Object.entries(
+                roles
+            ).forEach(
+                function (
+                    [roleName, count]
+                ) {
+
+                    const roleRow =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    roleRow.className =
+                        "admin-role-row";
+
+
+                    const formattedRole =
+                        roleName
+                            .replaceAll(
+                                "_",
+                                " "
+                            )
+                            .toUpperCase();
+
+
+                    roleRow.innerHTML =
+
+                        "<span>" +
+                        formattedRole +
+                        "</span>" +
+
+                        "<strong>" +
+                        count +
+                        "</strong>";
+
+
+                    roleContainer.appendChild(
+                        roleRow
+                    );
+                }
+            );
+
+
+            // No users
+
+            if (
+                Object.keys(roles).length === 0
+            ) {
+
+                roleContainer.innerHTML =
+
+                    "<div class='admin-role-row'>" +
+
+                    "<span>" +
+                    "No users found" +
+                    "</span>" +
+
+                    "<strong>0</strong>" +
+
+                    "</div>";
+            }
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin Dashboard loading error:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
+// MILESTONE 4 - EXCEL REPORT
+// ============================================================
+
+async function downloadExcelReport() {
+
+    const status =
+        document.getElementById(
+            "reportStatus"
+        );
+
+
+    try {
+
+        const role =
+            localStorage.getItem(
+                "itbisRole"
+            ) || "admin";
+
+
+        console.log(
+            "Downloading Excel as role:",
+            role
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "Generating Excel report...";
+        }
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/reports/export/excel?role=" +
+                encodeURIComponent(role)
+            );
+
+
+        if (!response.ok) {
+
+            if (response.status === 403) {
+
+                throw new Error(
+                    "Access denied. Admin or Security Manager role required."
+                );
+            }
+
+
+            throw new Error(
+                "Failed to generate Excel report"
+            );
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        const url =
+            window.URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href = url;
+
+
+        link.download =
+            "ITBIS_Security_Report.xlsx";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+
+        window.URL.revokeObjectURL(
+            url
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "Excel report downloaded successfully.";
+        }
+
+
+        console.log(
+            "Excel report downloaded successfully"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Excel report error:",
+            error
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                error.message;
+        }
+    }
+}
+
+
+// ============================================================
+// MILESTONE 4 - PDF REPORT
+// ============================================================
+
+async function downloadPDFReport() {
+
+    const status =
+        document.getElementById(
+            "reportStatus"
+        );
+
+
+    try {
+
+        const role =
+            localStorage.getItem(
+                "itbisRole"
+            ) || "admin";
+
+
+        console.log(
+            "Downloading PDF as role:",
+            role
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "Generating PDF report...";
+        }
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/reports/export/pdf?role=" +
+                encodeURIComponent(role)
+            );
+
+
+        if (!response.ok) {
+
+            if (response.status === 403) {
+
+                throw new Error(
+                    "Access denied. Admin or Security Manager role required."
+                );
+            }
+
+
+            throw new Error(
+                "Failed to generate PDF report"
+            );
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        const url =
+            window.URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href = url;
+
+
+        link.download =
+            "ITBIS_Security_Report.pdf";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+
+        window.URL.revokeObjectURL(
+            url
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "PDF report downloaded successfully.";
+        }
+
+
+        console.log(
+            "PDF report downloaded successfully"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "PDF report error:",
+            error
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                error.message;
+        }
+    }
+}
+
+
+// ============================================================
 // LOAD COMPLETE DASHBOARD
-// ============================================
+// ============================================================
 
 async function loadDashboard() {
 
@@ -757,13 +1488,31 @@ async function loadDashboard() {
         "Loading ITBIS Dashboard..."
     );
 
+
+    // Backend
+
     await checkBackend();
+
+
+    // Admin dashboard
+
+    await loadAdminDashboard();
+
+
+    // Employees
 
     await loadEmployees();
 
+
+    // Activities
+
     await loadActivities();
 
+
+    // Anomalies
+
     await loadAnomalies();
+
 
     console.log(
         "ITBIS Dashboard Loaded"
@@ -781,13 +1530,16 @@ function logout() {
         "itbisLoggedIn"
     );
 
+
     localStorage.removeItem(
         "itbisUser"
     );
 
+
     localStorage.removeItem(
         "itbisRole"
     );
+
 
     window.location.href =
         "login.html";

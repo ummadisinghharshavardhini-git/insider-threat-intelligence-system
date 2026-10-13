@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+import bcrypt
 
 from ..database import get_db
 from ..models import User
@@ -12,10 +13,34 @@ router = APIRouter(
 )
 
 
-@router.post("/register")
-def register(user: UserCreate, db: Session = Depends(get_db)):
+def hash_password(password: str) -> str:
+    password_bytes = password.encode("utf-8")
+    return bcrypt.hashpw(
+        password_bytes,
+        bcrypt.gensalt()
+    ).decode("utf-8")
 
-    existing_user = db.query(User).filter(User.email == user.email).first()
+
+def verify_password(password: str, stored_password: str) -> bool:
+    # New bcrypt password
+    if stored_password.startswith(("$2a$", "$2b$", "$2y$")):
+        return bcrypt.checkpw(
+            password.encode("utf-8"),
+            stored_password.encode("utf-8")
+        )
+
+    # Existing old plain-text password
+    return stored_password == password
+
+
+@router.post("/register")
+def register(
+    user: UserCreate,
+    db: Session = Depends(get_db)
+):
+    existing_user = db.query(User).filter(
+        User.email == user.email
+    ).first()
 
     if existing_user:
         raise HTTPException(
@@ -25,7 +50,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     new_user = User(
         email=user.email,
-        password=user.password,
+        password=hash_password(user.password),
         role="employee"
     )
 
@@ -41,8 +66,10 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
-
+def login(
+    user: UserLogin,
+    db: Session = Depends(get_db)
+):
     existing_user = db.query(User).filter(
         User.email == user.email
     ).first()
@@ -53,11 +80,21 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             detail="Invalid email or password"
         )
 
-    if existing_user.password != user.password:
+    if not verify_password(
+        user.password,
+        existing_user.password
+    ):
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
+
+    # Upgrade old plain-text password to bcrypt
+    if not existing_user.password.startswith(
+        ("$2a$", "$2b$", "$2y$")
+    ):
+        existing_user.password = hash_password(user.password)
+        db.commit()
 
     return {
         "message": "Login successful",

@@ -1,9 +1,11 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Incident, Employee
 from app.risk_scoring import calculate_risk_score
+from app.audit import log_action
 
 
 router = APIRouter(
@@ -62,6 +64,15 @@ def create_incident_from_risk(
     db.add(incident)
     db.commit()
     db.refresh(incident)
+
+    log_action(
+        db=db,
+        action="incident_created",
+        details=(
+            f"Incident ID {incident.id} created for employee "
+            f"{employee_id}; severity={risk_level}; risk_score={risk_score}"
+        )
+    )
 
     return {
         "message": "Incident created successfully",
@@ -172,4 +183,46 @@ def get_incident_timeline(
         "status": incident.status,
         "severity": incident.severity,
         "timeline": timeline
+    }
+
+# ============================================================
+# START INCIDENT INVESTIGATION
+# ============================================================
+
+
+@router.put("/{incident_id}/investigate")
+def start_incident_investigation(
+    incident_id: int,
+    role: str,
+    db: Session = Depends(get_db)
+):
+    if role not in ["admin", "security_manager", "security_analyst"]:
+        raise HTTPException(
+            status_code=403,
+            detail="You are not authorized to investigate incidents"
+        )
+
+    incident = (
+        db.query(Incident)
+        .filter(Incident.id == incident_id)
+        .first()
+    )
+
+    if not incident:
+        raise HTTPException(
+            status_code=404,
+            detail="Incident not found"
+        )
+
+    if incident.status == "open":
+        incident.status = "investigating"
+        incident.investigation_started_at = datetime.utcnow()
+        db.commit()
+        db.refresh(incident)
+
+    return {
+        "message": "Incident investigation started",
+        "incident_id": incident.id,
+        "status": incident.status,
+        "investigation_started_at": incident.investigation_started_at
     }

@@ -59,10 +59,15 @@ class Incident(Base):
         server_default=func.now()
     )
 
+    investigation_started_at = Column(
+        DateTime,
+        nullable=True
+    )
 
 # ============================================================
 # EVIDENCE MODEL
 # ============================================================
+
 
 class Evidence(Base):
     __tablename__ = "evidence"
@@ -132,3 +137,17 @@ class Alert(Base):
         DateTime,
         server_default=func.now()
     )
+
+    resolved_at = Column(
+        DateTime, nullable=True
+    )
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    action = Column(String, nullable=False)
+    details = Column(Text, nullable=True)
+    timestamp = Column(DateTime, server_default=func.now(), nullable=False)

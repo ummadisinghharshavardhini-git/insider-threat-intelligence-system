@@ -15,6 +15,7 @@ loginForm.addEventListener("submit", async function (event) {
 
     try {
 
+        console.log("Sending login request to:", `${API_URL}/auth/login`);
         const response = await fetch(`${API_URL}/auth/login`, {
             method: "POST",
 
@@ -44,7 +45,7 @@ loginForm.addEventListener("submit", async function (event) {
         localStorage.setItem("itbisRole", data.role);
 
         // Open dashboard
-        window.location.href = "index.html";
+        window.location.href = "/index.html";
 
     } catch (error) {
 

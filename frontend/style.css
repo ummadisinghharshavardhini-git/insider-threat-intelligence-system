@@ -767,3 +767,95 @@ tbody tr:last-child td {
         padding: 20px;
     }
 }
+
+/* =========================================================
+   MILESTONE 4 - ADMIN DASHBOARD
+========================================================= */
+
+.full-width {
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.admin-stats-grid {
+    margin-top: 20px;
+}
+
+.admin-role-section {
+    margin-top: 25px;
+}
+
+.admin-role-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-role-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 18px;
+
+    border-radius: 10px;
+
+    background: #f7f8fc;
+
+    border: 1px solid #e5e7eb;
+}
+
+.admin-role-row span {
+    font-weight: 500;
+    color: #374151;
+}
+
+.admin-role-row strong {
+    font-size: 18px;
+    color: #111827;
+}
+
+/* =========================================================
+   MILESTONE 4 - REPORTS & EXPORT
+========================================================= */
+
+.report-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.report-btn {
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.report-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.excel-btn {
+    background: #198754;
+    color: white;
+}
+
+.pdf-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.report-status {
+    margin-top: 15px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f7f8fc;
+    color: #555;
+    font-size: 13px;
+}

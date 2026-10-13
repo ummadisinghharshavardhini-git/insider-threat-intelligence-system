@@ -17,13 +17,18 @@
     <aside class="sidebar">
 
         <div class="brand">
-            <div class="brand-logo">IT</div>
+
+            <div class="brand-logo">
+                IT
+            </div>
 
             <div>
                 <h2>ITBIS</h2>
                 <span>Security System</span>
             </div>
+
         </div>
+
 
         <nav class="sidebar-nav">
 
@@ -33,7 +38,8 @@
             </a>
 
             <a href="#employeesSection" class="nav-item">
-                <span>👥</span>Employees
+                <span>👥</span>
+                Employees
             </a>
 
             <a href="#activitySection" class="nav-item">
@@ -63,6 +69,7 @@
 
         </nav>
 
+
         <div class="sidebar-bottom">
 
             <button class="logout-btn" onclick="logout()">
@@ -80,14 +87,22 @@
     <div class="main-content">
 
 
-        <!-- HEADER -->
+        <!-- ================= HEADER ================= -->
 
         <header class="topbar">
 
             <div>
-                <h1>Security Dashboard</h1>
-                <p>Insider Threat Behavioral Intelligence System</p>
+
+                <h1>
+                    Security Dashboard
+                </h1>
+
+                <p>
+                    Insider Threat Behavioral Intelligence System
+                </p>
+
             </div>
+
 
             <div class="user-info">
 
@@ -96,8 +111,15 @@
                 </div>
 
                 <div>
-                    <strong>Administrator</strong>
-                    <span>Security Admin</span>
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Security Admin
+                    </span>
+
                 </div>
 
             </div>
@@ -110,22 +132,30 @@
         <main class="dashboard-container">
 
 
-            <!-- WELCOME BANNER -->
+            <!-- ================= WELCOME BANNER ================= -->
 
             <section class="welcome-banner">
 
                 <div>
-                    <h2>Welcome back 👋</h2>
+
+                    <h2>
+                        Welcome back 👋
+                    </h2>
 
                     <p>
                         Monitor employee behavior, detect anomalies,
                         and analyze security risks.
                     </p>
+
                 </div>
 
+
                 <div class="system-online">
+
                     <span class="online-dot"></span>
+
                     System Online
+
                 </div>
 
             </section>
@@ -135,6 +165,9 @@
 
             <section class="stats-grid">
 
+
+                <!-- TOTAL EMPLOYEES -->
+
                 <div class="stat-card">
 
                     <div class="stat-icon blue">
@@ -142,12 +175,21 @@
                     </div>
 
                     <div>
-                        <span>Total Employees</span>
-                        <h2 id="employeeCount">0</h2>
+
+                        <span>
+                            Total Employees
+                        </span>
+
+                        <h2 id="employeeCount">
+                            0
+                        </h2>
+
                     </div>
 
                 </div>
 
+
+                <!-- TOTAL ACTIVITIES -->
 
                 <div class="stat-card">
 
@@ -156,12 +198,21 @@
                     </div>
 
                     <div>
-                        <span>Total Activities</span>
-                        <h2 id="activityCount">0</h2>
+
+                        <span>
+                            Total Activities
+                        </span>
+
+                        <h2 id="activityCount">
+                            0
+                        </h2>
+
                     </div>
 
                 </div>
 
+
+                <!-- ANOMALIES -->
 
                 <div class="stat-card">
 
@@ -170,12 +221,21 @@
                     </div>
 
                     <div>
-                        <span>Anomalies Detected</span>
-                        <h2 id="anomalyCount">0</h2>
+
+                        <span>
+                            Anomalies Detected
+                        </span>
+
+                        <h2 id="anomalyCount">
+                            0
+                        </h2>
+
                     </div>
 
                 </div>
 
+
+                <!-- HIGH RISK -->
 
                 <div class="stat-card">
 
@@ -184,8 +244,15 @@
                     </div>
 
                     <div>
-                        <span>High Risk</span>
-                        <h2 id="highRiskCount">0</h2>
+
+                        <span>
+                            High Risk
+                        </span>
+
+                        <h2 id="highRiskCount">
+                            0
+                        </h2>
+
                     </div>
 
                 </div>
@@ -193,65 +260,126 @@
             </section>
 
 
-            <!-- ================= RISK + SYSTEM STATUS ================= -->
+            <!-- =====================================================
+                 MILESTONE 4 - ADMIN DASHBOARD
+            ====================================================== -->
 
-            <section class="dashboard-grid">
+            <section class="dashboard-card full-width" id="adminDashboardSection">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Admin Dashboard
+                        </h2>
+
+                        <p>
+                            Platform-level security and system overview
+                        </p>
+
+                    </div>
 
 
-                <!-- RISK OVERVIEW -->
+                    <div class="section-badge">
+                        Administration
+                    </div>
 
-                <div class="dashboard-card" id="riskSection">
+                </div>
 
-                    <div class="card-header">
+
+                <!-- ADMIN STAT CARDS -->
+
+                <div class="stats-grid admin-stats-grid">
+
+
+                    <!-- TOTAL USERS -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+                            👤
+                        </div>
 
                         <div>
-                            <h2>Risk Overview</h2>
-                            <p>Current employee risk distribution</p>
+
+                            <span>
+                                Total Users
+                            </span>
+
+                            <h2 id="adminUserCount">
+                                0
+                            </h2>
+
                         </div>
 
                     </div>
 
 
-                    <div class="risk-item">
+                    <!-- TOTAL EMPLOYEES -->
 
-                        <div class="risk-label">
-                            <span>High Risk</span>
-                            <strong id="highRisk">0</strong>
+                    <div class="stat-card">
+
+                        <div class="stat-icon purple">
+                            👥
                         </div>
 
-                        <div class="progress-background">
-                            <div id="highProgress" class="progress-bar high">
-                            </div>
-                        </div>
+                        <div>
 
-                    </div>
+                            <span>
+                                Total Employees
+                            </span>
 
+                            <h2 id="adminEmployeeCount">
+                                0
+                            </h2>
 
-                    <div class="risk-item">
-
-                        <div class="risk-label">
-                            <span>Medium Risk</span>
-                            <strong id="mediumRisk">0</strong>
-                        </div>
-
-                        <div class="progress-background">
-                            <div id="mediumProgress" class="progress-bar medium">
-                            </div>
                         </div>
 
                     </div>
 
 
-                    <div class="risk-item">
+                    <!-- TOTAL INCIDENTS -->
 
-                        <div class="risk-label">
-                            <span>Low Risk</span>
-                            <strong id="lowRisk">0</strong>
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+                            ⚠
                         </div>
 
-                        <div class="progress-background">
-                            <div id="lowProgress" class="progress-bar low">
-                            </div>
+                        <div>
+
+                            <span>
+                                Total Incidents
+                            </span>
+
+                            <h2 id="incidentCount">
+                                0
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPEN INCIDENTS -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red">
+                            !
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Open Incidents
+                            </span>
+
+                            <h2 id="openIncidentCount">
+                                0
+                            </h2>
+
                         </div>
 
                     </div>
@@ -259,15 +387,229 @@
                 </div>
 
 
-                <!-- SYSTEM STATUS -->
+                <!-- USERS BY ROLE -->
+
+                <div class="admin-role-section">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Users by Role
+                            </h3>
+
+                            <p>
+                                Platform user role distribution
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="usersByRole" class="admin-role-list">
+
+                        <div class="admin-role-row">
+
+                            <span>
+                                Loading...
+                            </span>
+
+                            <strong>
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 MILESTONE 4 - REPORTS & EXPORT
+            ====================================================== -->
+
+            <section class="dashboard-card full-width" id="reportsSection">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Reports & Export
+                        </h2>
+
+                        <p>
+                            Generate security reports from ITBIS data
+                        </p>
+
+                    </div>
+
+
+                    <div class="section-badge">
+                        Reports
+                    </div>
+
+                </div>
+
+
+                <div class="report-actions">
+
+
+                    <!-- EXCEL -->
+
+                    <button class="report-btn excel-btn" onclick="downloadExcelReport()">
+                        📊 Download Excel
+                    </button>
+
+
+                    <!-- PDF -->
+
+                    <button class="report-btn pdf-btn" onclick="downloadPDFReport()">
+                        📄 Download PDF
+                    </button>
+
+                </div>
+
+
+                <div id="reportStatus" class="report-status">
+                    Ready to generate report.
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 RISK + SYSTEM STATUS
+            ====================================================== -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- ================= RISK OVERVIEW ================= -->
+
+                <div class="dashboard-card" id="riskSection">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>
+                                Risk Overview
+                            </h2>
+
+                            <p>
+                                Current employee risk distribution
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HIGH RISK -->
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+
+                            <span>
+                                High Risk
+                            </span>
+
+                            <strong id="highRisk">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-background">
+
+                            <div id="highProgress" class="progress-bar high">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MEDIUM RISK -->
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+
+                            <span>
+                                Medium Risk
+                            </span>
+
+                            <strong id="mediumRisk">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-background">
+
+                            <div id="mediumProgress" class="progress-bar medium">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOW RISK -->
+
+                    <div class="risk-item">
+
+                        <div class="risk-label">
+
+                            <span>
+                                Low Risk
+                            </span>
+
+                            <strong id="lowRisk">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-background">
+
+                            <div id="lowProgress" class="progress-bar low">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= SYSTEM STATUS ================= -->
 
                 <div class="dashboard-card">
 
                     <div class="card-header">
 
                         <div>
-                            <h2>System Status</h2>
-                            <p>ITBIS infrastructure health</p>
+
+                            <h2>
+                                System Status
+                            </h2>
+
+                            <p>
+                                ITBIS infrastructure health
+                            </p>
+
                         </div>
 
                     </div>
@@ -275,12 +617,23 @@
 
                     <div class="status-list">
 
+
+                        <!-- FASTAPI -->
+
                         <div class="status-row">
 
                             <div>
-                                <strong>FastAPI Backend</strong>
-                                <span>API Service</span>
+
+                                <strong>
+                                    FastAPI Backend
+                                </strong>
+
+                                <span>
+                                    API Service
+                                </span>
+
                             </div>
+
 
                             <div class="status-ok">
                                 ● Online
@@ -289,12 +642,22 @@
                         </div>
 
 
+                        <!-- MONGODB -->
+
                         <div class="status-row">
 
                             <div>
-                                <strong>MongoDB</strong>
-                                <span>Behavior Database</span>
+
+                                <strong>
+                                    MongoDB
+                                </strong>
+
+                                <span>
+                                    Behavior Database
+                                </span>
+
                             </div>
+
 
                             <div class="status-ok">
                                 ● Connected
@@ -303,12 +666,22 @@
                         </div>
 
 
+                        <!-- POSTGRESQL -->
+
                         <div class="status-row">
 
                             <div>
-                                <strong>PostgreSQL</strong>
-                                <span>Employee Database</span>
+
+                                <strong>
+                                    PostgreSQL
+                                </strong>
+
+                                <span>
+                                    Employee Database
+                                </span>
+
                             </div>
+
 
                             <div class="status-ok">
                                 ● Connected
@@ -323,15 +696,24 @@
             </section>
 
 
-            <!-- ================= RECENT ACTIVITY ================= -->
+            <!-- =====================================================
+                 RECENT ACTIVITY
+            ====================================================== -->
 
             <section class="dashboard-card full-width" id="activitySection">
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Recent Activity</h2>
-                        <p>Latest employee activities</p>
+
+                        <h2>
+                            Recent Activity
+                        </h2>
+
+                        <p>
+                            Latest employee activities
+                        </p>
+
                     </div>
 
                 </div>
@@ -345,12 +727,29 @@
 
                             <tr>
 
-                                <th>Employee ID</th>
-                                <th>Activity</th>
-                                <th>Device</th>
-                                <th>Application</th>
-                                <th>Data Volume</th>
-                                <th>Risk</th>
+                                <th>
+                                    Employee ID
+                                </th>
+
+                                <th>
+                                    Activity
+                                </th>
+
+                                <th>
+                                    Device
+                                </th>
+
+                                <th>
+                                    Application
+                                </th>
+
+                                <th>
+                                    Data Volume
+                                </th>
+
+                                <th>
+                                    Risk
+                                </th>
 
                             </tr>
 
@@ -376,20 +775,27 @@
             </section>
 
 
-            <!-- ================= ANOMALY DETECTION ================= -->
+            <!-- =====================================================
+                 ANOMALY DETECTION
+            ====================================================== -->
 
             <section class="dashboard-card full-width" id="anomalySection">
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Anomaly Detection</h2>
+
+                        <h2>
+                            Anomaly Detection
+                        </h2>
 
                         <p>
                             Recent security anomalies detected
                             from employee behavioral patterns
                         </p>
+
                     </div>
+
 
                     <div class="section-badge">
                         Behavioral Analysis
@@ -406,12 +812,29 @@
 
                             <tr>
 
-                                <th>Employee ID</th>
-                                <th>Activity</th>
-                                <th>Login Time</th>
-                                <th>Baseline Avg</th>
-                                <th>Threshold</th>
-                                <th>Status</th>
+                                <th>
+                                    Employee ID
+                                </th>
+
+                                <th>
+                                    Activity
+                                </th>
+
+                                <th>
+                                    Login Time
+                                </th>
+
+                                <th>
+                                    Baseline Avg
+                                </th>
+
+                                <th>
+                                    Threshold
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
 
                             </tr>
 
@@ -436,54 +859,124 @@
 
             </section>
 
-            <!-- Employees Section -->
+
+            <!-- =====================================================
+                 EMPLOYEES
+            ====================================================== -->
+
             <section class="dashboard-card full-width" id="employeesSection">
+
                 <div class="card-header">
+
                     <div>
-                        <h2>Employees</h2>
-                        <p>Registered employees in the ITBIS system</p>
+
+                        <h2>
+                            Employees
+                        </h2>
+
+                        <p>
+                            Registered employees in the ITBIS system
+                        </p>
+
                     </div>
-                    <div class="section-badge">Employee Management</div>
+
+
+                    <div class="section-badge">
+                        Employee Management
+                    </div>
+
                 </div>
+
 
                 <div class="table-container">
+
                     <table>
+
                         <thead>
+
                             <tr>
-                                <th>Employee ID</th>
-                                <th>Name</th>
-                                <th>Department</th>
-                                <th>Designation</th>
-                                <th>Manager ID</th>
+
+                                <th>
+                                    Employee ID
+                                </th>
+
+                                <th>
+                                    Name
+                                </th>
+
+                                <th>
+                                    Department
+                                </th>
+
+                                <th>
+                                    Designation
+                                </th>
+
+                                <th>
+                                    Manager ID
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
                             </tr>
+
                         </thead>
 
-                        <tbody id="employeesTable">
-                            <tr>
-                                <td colspan="5">Loading employees...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <!-- ================= EMPLOYEE RISK MONITORING ================= -->
 
-            <section class="dashboard-card full-width">
+                        <tbody id="employeesTable">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Loading employees...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 EMPLOYEE RISK MONITORING
+            ====================================================== -->
+
+            <section class="dashboard-card full-width" id="employeeRiskSection">
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Employee Risk Monitoring</h2>
-                        <p>Individual employee security risk</p>
+
+                        <h2>
+                            Employee Risk Monitoring
+                        </h2>
+
+                        <p>
+                            Individual employee security risk
+                        </p>
+
                     </div>
 
                 </div>
 
 
-                <div class="employee-list">
+                <!-- IMPORTANT:
+                     script.js uses employeeRiskMonitoring
+                -->
+
+                <div class="employee-list" id="employeeRiskMonitoring">
 
                     <div class="loading-message">
+
                         Loading employee risk data...
+
                     </div>
 
                 </div>
@@ -512,7 +1005,9 @@
     </div>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
 
     <script src="script.js"></script>
 

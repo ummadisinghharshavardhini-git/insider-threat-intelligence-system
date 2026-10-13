@@ -1,9 +1,13 @@
+
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Alert, Employee
 from app.schemas import AlertCreate
+from app.audit import log_action
 
 
 router = APIRouter(
@@ -11,6 +15,10 @@ router = APIRouter(
     tags=["Alerts"]
 )
 
+
+# ============================================================
+# CREATE ALERT
+# ============================================================
 
 @router.post("/")
 def create_alert(
@@ -62,9 +70,14 @@ def create_alert(
         "message_text": alert.message,
         "status": alert.status,
         "assigned_to": alert.assigned_to,
-        "created_at": alert.created_at
+        "created_at": alert.created_at,
+        "resolved_at": alert.resolved_at
     }
 
+
+# ============================================================
+# GET ALL ALERTS
+# ============================================================
 
 @router.get("/")
 def get_alerts(
@@ -86,11 +99,17 @@ def get_alerts(
                 "message": alert.message,
                 "status": alert.status,
                 "assigned_to": alert.assigned_to,
-                "created_at": alert.created_at
+                "created_at": alert.created_at,
+                "resolved_at": alert.resolved_at
             }
             for alert in alerts
         ]
     }
+
+
+# ============================================================
+# ASSIGN ALERT
+# ============================================================
 
 
 @router.put("/{alert_id}/assign")
@@ -124,6 +143,12 @@ def assign_alert(
     db.commit()
     db.refresh(alert)
 
+    log_action(
+        db=db,
+        action="alert_assigned",
+        details=f"Alert ID {alert.id} assigned to {assigned_to} by role {role}"
+    )
+
     return {
         "message": "Alert assigned successfully",
         "alert_id": alert.id,
@@ -131,6 +156,10 @@ def assign_alert(
         "status": alert.status
     }
 
+
+# ============================================================
+# RESOLVE ALERT
+# ============================================================
 
 @router.put("/{alert_id}/resolve")
 def resolve_alert(
@@ -156,13 +185,16 @@ def resolve_alert(
             detail="Alert not found"
         )
 
-    alert.status = "resolved"
+    if alert.status != "resolved":
+        alert.status = "resolved"
+        alert.resolved_at = datetime.utcnow()
 
-    db.commit()
-    db.refresh(alert)
+        db.commit()
+        db.refresh(alert)
 
     return {
         "message": "Alert resolved successfully",
         "alert_id": alert.id,
-        "status": alert.status
+        "status": alert.status,
+        "resolved_at": alert.resolved_at
     }
